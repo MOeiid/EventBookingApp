@@ -40,9 +40,11 @@ export default function EventDetails({ route, navigation }: any) {
     try {
       const response = await eventsAPI.getById(eventId);
       dispatch(setSelectedEvent(response.data));
+      dispatch(setLoading(false));
     } catch {
       dispatch(setError("Failed to fetch event details"));
       Alert.alert("Error", "Could not load event details");
+      dispatch(setLoading(false));
     }
   }, [eventId, dispatch]);
 
@@ -192,7 +194,7 @@ export default function EventDetails({ route, navigation }: any) {
           </TouchableOpacity>
           {selectedEvent.availableSpots === 0 && (
             <Text style={styles.soldOutText}>This event is fully booked</Text>
-          )}{" "}
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
